@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:getx/components/bottom_sheet.dart';
 
 import 'package:getx/components/dialog_box.dart';
 
@@ -36,6 +38,12 @@ class HomePage extends StatelessWidget {
                   myDialogBox();
                 },
                 child: const Text('Show Dialog'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  myBottomSheet();
+                },
+                child: const Text('Show Bottom Sheet'),
               ),
             ],
           ),
