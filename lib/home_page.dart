@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:getx/components/bottom_sheet.dart';
 
 import 'package:getx/components/dialog_box.dart';
