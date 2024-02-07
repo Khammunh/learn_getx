@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:getx/components/bottom_sheet.dart';
 
@@ -44,6 +46,26 @@ class HomePage extends StatelessWidget {
                 },
                 child: const Text('Show Bottom Sheet'),
               ),
+              const SizedBox(height: 30),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {},
+                    style:
+                        ElevatedButton.styleFrom(backgroundColor: Colors.blue),
+                    child: Text(
+                      'About Page',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  const SizedBox(width: 50),
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: const Text('Contact Page'),
+                  ),
+                ],
+              )
             ],
           ),
         ),

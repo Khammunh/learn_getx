@@ -21,7 +21,27 @@ void myBottomSheet(BuildContext context) {
             height: 5,
             color: Colors.grey[300],
           ),
-          Text('This is Bottom Sheet'),
+          const SizedBox(height: 20),
+          const Text('This is Bottom Sheet'),
+          const SizedBox(height: 20),
+          Container(
+            margin: const EdgeInsets.only(right: 20, left: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                OutlinedButton(
+                  onPressed: () {
+                    Get.back();
+                  },
+                  child: const Text('Cannel'),
+                ),
+                ElevatedButton(
+                  onPressed: () {},
+                  child: const Text('Done'),
+                ),
+              ],
+            ),
+          )
         ],
       ),
     ),
