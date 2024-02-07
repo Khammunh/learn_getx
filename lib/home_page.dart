@@ -1,9 +1,12 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:getx/components/bottom_sheet.dart';
 
 import 'package:getx/components/dialog_box.dart';
+import 'package:getx/pages/drawer.dart';
+import 'package:getx/pages/language_change.dart';
 
 import 'components/snacbar.dart';
 
@@ -13,6 +16,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: MyDrawer(),
       appBar: AppBar(
         centerTitle: true,
         title: const Text('Getx State Management'),
@@ -51,7 +55,9 @@ class HomePage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.toNamed('/about');
+                    },
                     style:
                         ElevatedButton.styleFrom(backgroundColor: Colors.blue),
                     child: Text(
@@ -61,11 +67,20 @@ class HomePage extends StatelessWidget {
                   ),
                   const SizedBox(width: 50),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.toNamed('/contact');
+                    },
                     child: const Text('Contact Page'),
                   ),
                 ],
-              )
+              ),
+              const SizedBox(height: 50),
+              ElevatedButton(
+                onPressed: () {
+                  Get.to(LanguageChange());
+                },
+                child: const Text('Language'),
+              ),
             ],
           ),
         ),

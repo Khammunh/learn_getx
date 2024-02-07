@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:getx/components/languages.dart';
+import 'package:getx/components/routes.dart';
 
 import 'home_page.dart';
 
@@ -14,11 +16,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const GetMaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      locale: const Locale('en'),
+      fallbackLocale: const Locale('en'),
+      translations: Language(),
+      getPages: allPageRoutes,
+      home: const HomePage(),
     );
   }
 }
-
-
