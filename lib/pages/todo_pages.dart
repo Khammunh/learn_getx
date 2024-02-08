@@ -1,4 +1,7 @@
+// ignore_for_file: avoid_unnecessary_containers
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class TodoPage extends StatelessWidget {
   const TodoPage({super.key});
@@ -14,16 +17,68 @@ class TodoPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            width: 300,
+            width: 200,
             padding: const EdgeInsets.all(10),
             margin: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-                color: Colors.blue, borderRadius: BorderRadius.circular(10)),
-            child: const InkWell(
-              child: Row(
-                children: [
-                  Text('Add new'),
-                ],
+              color: Colors.blue,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: InkWell(
+              onTap: () {
+                Get.defaultDialog(
+                  title: 'Enter new task',
+                  content: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: TextFormField(
+                              decoration:
+                                  const InputDecoration(hintText: 'Enter task'),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TextButton(
+                            onPressed: () {
+                              Get.back();
+                            },
+                            child: const Text('Cannel'),
+                          ),
+                          const SizedBox(width: 60),
+                          TextButton(
+                            onPressed: () {},
+                            child: const Text('Save'),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                );
+              },
+              child: Container(
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.add,
+                      size: 30,
+                      color: Colors.white,
+                    ),
+                    SizedBox(width: 20),
+                    Text(
+                      'Add new',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
