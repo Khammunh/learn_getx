@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx/components/languages.dart';
 import 'package:getx/components/routes.dart';
-
-import 'home_page.dart';
+import 'package:getx/pages/todo_pages.dart';
 
 void main() {
   runApp(
@@ -22,7 +21,7 @@ class MyApp extends StatelessWidget {
       fallbackLocale: const Locale('en'),
       translations: Language(),
       getPages: allPageRoutes,
-      home: const HomePage(),
+      home: const TodoPage(),
     );
   }
 }

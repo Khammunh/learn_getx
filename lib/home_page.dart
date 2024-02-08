@@ -7,6 +7,7 @@ import 'package:getx/components/bottom_sheet.dart';
 import 'package:getx/components/dialog_box.dart';
 import 'package:getx/pages/drawer.dart';
 import 'package:getx/pages/language_change.dart';
+import 'package:getx/pages/todo_pages.dart';
 
 import 'components/snacbar.dart';
 
@@ -80,6 +81,13 @@ class HomePage extends StatelessWidget {
                   Get.to(LanguageChange());
                 },
                 child: const Text('Language'),
+              ),
+              const SizedBox(height: 50),
+              ElevatedButton(
+                onPressed: () {
+                  Get.to(TodoPage());
+                },
+                child: const Text('Todo Page API'),
               ),
             ],
           ),
