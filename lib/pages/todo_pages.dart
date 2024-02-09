@@ -8,6 +8,7 @@ class TodoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController textEditingController = TextEditingController();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Todo API'),
@@ -26,39 +27,7 @@ class TodoPage extends StatelessWidget {
             ),
             child: InkWell(
               onTap: () {
-                Get.defaultDialog(
-                  title: 'Enter new task',
-                  content: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: TextFormField(
-                              decoration:
-                                  const InputDecoration(hintText: 'Enter task'),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          TextButton(
-                            onPressed: () {
-                              Get.back();
-                            },
-                            child: const Text('Cannel'),
-                          ),
-                          const SizedBox(width: 60),
-                          TextButton(
-                            onPressed: () {},
-                            child: const Text('Save'),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                );
+                addNewTodo(textEditingController);
               },
               child: Container(
                 child: const Row(
@@ -110,21 +79,76 @@ class TodoPage extends StatelessWidget {
                     decoration: BoxDecoration(
                         color: Colors.blue,
                         borderRadius: BorderRadius.circular(10)),
-                    child: const Column(
+                    child: Column(
                       children: [
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Icon(
-                              Icons.add_circle,
-                              color: Colors.white,
-                              size: 20,
+                            const Row(
+                              children: [
+                                Icon(
+                                  Icons.add_circle,
+                                  color: Colors.white,
+                                  size: 20,
+                                ),
+                                SizedBox(width: 4),
+                                Text(
+                                  'Eating food',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 20),
+                                ),
+                              ],
                             ),
-                            SizedBox(width: 4),
-                            Text(
-                              'Learn getx API',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 20),
-                            ),
+                            Row(
+                              children: [
+                                IconButton(
+                                  onPressed: () {
+                                    editTodo(textEditingController);
+                                  },
+                                  icon: const Icon(
+                                    Icons.edit,
+                                    color: Colors.white,
+                                    size: 20,
+                                  ),
+                                ),
+                                IconButton(
+                                  onPressed: () {
+                                    Get.defaultDialog(
+                                      title: 'Delete task',
+                                      content: Column(
+                                        children: [
+                                          const Text('Do you want to delete?'),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              TextButton(
+                                                onPressed: () {
+                                                  Get.back();
+                                                },
+                                                child: const Text('No'),
+                                              ),
+                                              const SizedBox(width: 60),
+                                              TextButton(
+                                                onPressed: () {
+                                                  Get.back();
+                                                },
+                                                child: const Text('Yes'),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                  icon: const Icon(
+                                    Icons.delete,
+                                    color: Colors.white,
+                                    size: 20,
+                                  ),
+                                ),
+                              ],
+                            )
                           ],
                         )
                       ],
@@ -136,6 +160,82 @@ class TodoPage extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Future<dynamic> editTodo(TextEditingController textEditingController) {
+    return Get.defaultDialog(
+      title: 'Edit task',
+      content: Column(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: TextFormField(
+                  controller: textEditingController,
+                  decoration: const InputDecoration(hintText: 'Edit task'),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextButton(
+                onPressed: () {
+                  Get.back();
+                },
+                child: const Text('Cannel'),
+              ),
+              const SizedBox(width: 60),
+              TextButton(
+                onPressed: () {
+                  Get.back();
+                },
+                child: const Text('Save'),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<dynamic> addNewTodo(TextEditingController textEditingController) {
+    return Get.defaultDialog(
+      title: 'Enter new task',
+      content: Column(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: TextFormField(
+                  controller: textEditingController,
+                  decoration: const InputDecoration(hintText: 'Enter task'),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextButton(
+                onPressed: () {
+                  Get.back();
+                },
+                child: const Text('Cannel'),
+              ),
+              const SizedBox(width: 60),
+              TextButton(
+                onPressed: () {
+                  Get.back();
+                },
+                child: const Text('Save'),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
