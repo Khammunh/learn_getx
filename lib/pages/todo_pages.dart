@@ -2,12 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:getx/components/api/todoController.dart';
 
 class TodoPage extends StatelessWidget {
   const TodoPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    TodoController todoController = Get.put(TodoController());
     TextEditingController textEditingController = TextEditingController();
     return Scaffold(
       appBar: AppBar(
@@ -73,89 +75,97 @@ class TodoPage extends StatelessWidget {
             Expanded(
               child: ListView.builder(
                 itemBuilder: (context, i) {
-                  return Container(
-                    padding: const EdgeInsets.all(10),
-                    margin: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Row(
-                              children: [
-                                Icon(
-                                  Icons.add_circle,
-                                  color: Colors.white,
-                                  size: 20,
-                                ),
-                                SizedBox(width: 4),
-                                Text(
-                                  'Eating food',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 20),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                IconButton(
-                                  onPressed: () {
-                                    editTodo(textEditingController);
-                                  },
-                                  icon: const Icon(
-                                    Icons.edit,
-                                    color: Colors.white,
-                                    size: 20,
-                                  ),
-                                ),
-                                IconButton(
-                                  onPressed: () {
-                                    Get.defaultDialog(
-                                      title: 'Delete task',
-                                      content: Column(
-                                        children: [
-                                          const Text('Do you want to delete?'),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              TextButton(
-                                                onPressed: () {
-                                                  Get.back();
-                                                },
-                                                child: const Text('No'),
-                                              ),
-                                              const SizedBox(width: 60),
-                                              TextButton(
-                                                onPressed: () {
-                                                  Get.back();
-                                                },
-                                                child: const Text('Yes'),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
+                  return Obx(
+                    () => Column(
+                      children: todoController.TodoList.map(
+                        (e) => Container(
+                          padding: const EdgeInsets.all(10),
+                          margin: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      const Icon(
+                                        Icons.add_circle,
+                                        color: Colors.white,
+                                        size: 20,
                                       ),
-                                    );
-                                  },
-                                  icon: const Icon(
-                                    Icons.delete,
-                                    color: Colors.white,
-                                    size: 20,
+                                      const SizedBox(width: 4),
+                                      Text(
+                                        e.title.toString(),
+                                        style: const TextStyle(
+                                            color: Colors.white, fontSize: 20),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                              ],
-                            )
-                          ],
-                        )
-                      ],
+                                  Row(
+                                    children: [
+                                      IconButton(
+                                        onPressed: () {
+                                          editTodo(textEditingController);
+                                        },
+                                        icon: const Icon(
+                                          Icons.edit,
+                                          color: Colors.white,
+                                          size: 20,
+                                        ),
+                                      ),
+                                      IconButton(
+                                        onPressed: () {
+                                          Get.defaultDialog(
+                                            title: 'Delete task',
+                                            content: Column(
+                                              children: [
+                                                const Text(
+                                                    'Do you want to delete?'),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        Get.back();
+                                                      },
+                                                      child: const Text('No'),
+                                                    ),
+                                                    const SizedBox(width: 60),
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        Get.back();
+                                                      },
+                                                      child: const Text('Yes'),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        },
+                                        icon: const Icon(
+                                          Icons.delete,
+                                          color: Colors.white,
+                                          size: 20,
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      ).toList(),
                     ),
                   );
                 },
-                itemCount: 4,
+                itemCount: 1,
               ),
             ),
           ],
