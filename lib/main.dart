@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx/components/languages.dart';
 import 'package:getx/components/routes.dart';
+import 'package:getx/pages/search_pages_screen.dart';
 import 'package:getx/pages/todo_pages.dart';
 
 void main() {
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
       fallbackLocale: const Locale('en'),
       translations: Language(),
       getPages: allPageRoutes,
-      home: const TodoPage(),
+      home: const SearchPagesScreen(),
     );
   }
 }
