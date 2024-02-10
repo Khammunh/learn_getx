@@ -2,20 +2,15 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:getx/components/api/todos_controllers.dart';
 
-import '../components/bottom_sheet.dart';
-import 'language_change.dart';
-
-class SearchPagesScreen extends StatefulWidget {
+class SearchPagesScreen extends StatelessWidget {
   const SearchPagesScreen({super.key});
 
   @override
-  State<SearchPagesScreen> createState() => _SearchPagesScreenState();
-}
-
-class _SearchPagesScreenState extends State<SearchPagesScreen> {
-  @override
   Widget build(BuildContext context) {
+    TodoControllers todoControllers = Get.put(TodoControllers());
+    TextEditingController _textEditingController = TextEditingController();
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -23,86 +18,103 @@ class _SearchPagesScreenState extends State<SearchPagesScreen> {
           margin: const EdgeInsets.only(right: 20, left: 20),
           child: Column(
             children: [
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    'Task',
-                    style: TextStyle(
-                      color: Colors.blue,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              // TextFormField(
-              //   decoration: InputDecoration(
-              //     hintText: 'Making Video',
-              //     filled: true,
-              //     fillColor: Colors.grey[00],
-              //     border: const OutlineInputBorder(
-              //       borderSide: BorderSide.none,
-              //     ),
-              //     suffixIcon: GestureDetector(
-              //       onTap: () {},
-              //       child: Container(
-              //         margin: const EdgeInsets.only(
-              //             right: 3, top: 2, left: 3, bottom: 2),
-              //         decoration: BoxDecoration(
-              //           color: Colors.blue,
-              //           borderRadius: BorderRadius.circular(10),
-              //         ),
-              //         child: const Icon(
-              //           Icons.delete,
-              //           color: Colors.white,
-              //         ),
-              //       ),
-              //     ),
-              //   ),
-              // ),
               Container(
-                padding: const EdgeInsets.all(10),
-                margin: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(10)),
-                child: Column(
+                child: const Row(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Row(
-                          children: [
-                            Text(
-                              'Making Video',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 20),
-                            ),
-                          ],
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Row(
-                            children: [
-                              IconButton(
-                                onPressed: () {},
-                                icon: const Icon(
-                                  Icons.delete,
-                                  color: Colors.blue,
-                                  size: 30,
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
+                    Text(
+                      "Task",
+                      style: TextStyle(color: Colors.blue),
                     )
                   ],
+                ),
+              ),
+              const SizedBox(height: 20),
+              Expanded(
+                child: ListView.builder(
+                  itemBuilder: (context, i) {
+                    return Obx(
+                      () => Column(
+                        children: todoControllers.todoLists
+                            .map(
+                              (e) => Container(
+                                padding: const EdgeInsets.all(10),
+                                margin: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                    color: Colors.blue,
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            const SizedBox(width: 4),
+                                            Text(
+                                              e.title.toString(),
+                                              style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 20),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            IconButton(
+                                              onPressed: () {
+                                                Get.defaultDialog(
+                                                  title: 'Delete task',
+                                                  content: Column(
+                                                    children: [
+                                                      const Text(
+                                                          'Do you want to delete?'),
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          TextButton(
+                                                            onPressed: () {
+                                                              Get.back();
+                                                            },
+                                                            child: const Text(
+                                                                'No'),
+                                                          ),
+                                                          const SizedBox(
+                                                              width: 60),
+                                                          TextButton(
+                                                            onPressed: () {
+                                                              Get.back();
+                                                            },
+                                                            child: const Text(
+                                                                'Yes'),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                );
+                                              },
+                                              icon: const Icon(
+                                                Icons.delete,
+                                                color: Colors.white,
+                                                size: 20,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            )
+                            .toList(),
+                      ),
+                    );
+                  },
+                  itemCount: 1,
                 ),
               ),
             ],
@@ -136,6 +148,7 @@ class _SearchPagesScreenState extends State<SearchPagesScreen> {
                   Container(
                     margin: const EdgeInsets.all(18),
                     child: TextFormField(
+                      controller: _textEditingController,
                       decoration: const InputDecoration(
                         hintText: 'Enter Task',
                       ),
@@ -149,7 +162,8 @@ class _SearchPagesScreenState extends State<SearchPagesScreen> {
                       children: [
                         ElevatedButton(
                           onPressed: () {
-                            Get.back();
+                            todoControllers
+                                .postTodos(_textEditingController.text);
                           },
                           child: const Text('Save'),
                         ),
