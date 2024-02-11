@@ -52,7 +52,7 @@ class SearchPagesScreen extends StatelessWidget {
                                           children: [
                                             const SizedBox(width: 4),
                                             Text(
-                                              e.title.toString(),
+                                              e.todoTitle.toString(),
                                               style: const TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 20),
@@ -85,6 +85,10 @@ class SearchPagesScreen extends StatelessWidget {
                                                               width: 60),
                                                           TextButton(
                                                             onPressed: () {
+                                                              //Delete
+                                                              todoControllers
+                                                                  .deleteTodos(
+                                                                      e.id);
                                                               Get.back();
                                                             },
                                                             child: const Text(
@@ -164,6 +168,8 @@ class SearchPagesScreen extends StatelessWidget {
                           onPressed: () {
                             todoControllers
                                 .postTodos(_textEditingController.text);
+                            Get.back();
+                            _textEditingController.clear();
                           },
                           child: const Text('Save'),
                         ),

@@ -18,9 +18,7 @@ class TodoControllers extends GetxController {
     final responses = await http.get(
       Uri.parse("https://65c49fc3dae2304e92e2f2eb.mockapi.io/api/todoList"),
     );
-    var datas = jsonDecode(
-      responses.body.toString(),
-    );
+    var datas = jsonDecode(responses.body.toString());
 
     if (responses.statusCode == 200) {
       for (Map<String, dynamic> index in datas) {
@@ -31,7 +29,6 @@ class TodoControllers extends GetxController {
       return todoLists;
     } else {
       return todoLists;
-      // learn here
     }
   }
 
@@ -46,6 +43,23 @@ class TodoControllers extends GetxController {
     );
     if (responses.statusCode == 201) {
       print('Done');
+      todoLists.clear();
+      getTodos();
+    } else {
+      print('Fail');
+    }
+  }
+    // Delete todos
+  Future<void> deleteTodos(id) async {
+    final responses = await http.delete(
+      Uri.parse("https://65c49fc3dae2304e92e2f2eb.mockapi.io/api/todoList/$id"),
+
+      
+    );
+    if (responses.statusCode == 200) {
+      print('Done');
+      todoLists.clear();
+      getTodos();
     } else {
       print('Fail');
     }
