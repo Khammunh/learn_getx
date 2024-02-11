@@ -1,4 +1,4 @@
-// ignore_for_file: sort_child_properties_last
+// ignore_for_file: sort_child_properties_last, avoid_unnecessary_containers
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -33,89 +33,103 @@ class SearchPagesScreen extends StatelessWidget {
                 child: ListView.builder(
                   itemBuilder: (context, i) {
                     return Obx(
-                      () => Column(
-                        children: todoControllers.todoLists
-                            .map(
-                              (e) => Container(
-                                padding: const EdgeInsets.all(10),
-                                margin: const EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                    color: Colors.blue,
-                                    borderRadius: BorderRadius.circular(10)),
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            const SizedBox(width: 4),
-                                            Text(
-                                              e.todoTitle.toString(),
-                                              style: const TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 20),
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            IconButton(
-                                              onPressed: () {
-                                                Get.defaultDialog(
-                                                  title: 'Delete task',
-                                                  content: Column(
-                                                    children: [
-                                                      const Text(
-                                                          'Do you want to delete?'),
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          TextButton(
-                                                            onPressed: () {
-                                                              Get.back();
-                                                            },
-                                                            child: const Text(
-                                                                'No'),
-                                                          ),
-                                                          const SizedBox(
-                                                              width: 60),
-                                                          TextButton(
-                                                            onPressed: () {
-                                                              //Delete
-                                                              todoControllers
-                                                                  .deleteTodos(
-                                                                      e.id);
-                                                              Get.back();
-                                                            },
-                                                            child: const Text(
-                                                                'Yes'),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ],
-                                                  ),
-                                                );
-                                              },
-                                              icon: const Icon(
-                                                Icons.delete,
-                                                color: Colors.white,
-                                                size: 20,
-                                              ),
-                                            ),
-                                          ],
-                                        )
-                                      ],
-                                    )
-                                  ],
+                      () => todoControllers.isLoading.value
+                          ? Container(
+                              child: const Padding(
+                                padding: EdgeInsets.only(top: 300,bottom: 400),
+                                child: Center(
+                                  child: Text('Loading...'),
                                 ),
                               ),
                             )
-                            .toList(),
-                      ),
+                          : Column(
+                              children: todoControllers.todoLists
+                                  .map(
+                                    (e) => Container(
+                                      padding: const EdgeInsets.all(10),
+                                      margin: const EdgeInsets.all(10),
+                                      decoration: BoxDecoration(
+                                          color: Colors.blue,
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  const SizedBox(width: 4),
+                                                  Text(
+                                                    e.todoTitle.toString(),
+                                                    style: const TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 20),
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                children: [
+                                                  IconButton(
+                                                    onPressed: () {
+                                                      Get.defaultDialog(
+                                                        title: 'Delete task',
+                                                        content: Column(
+                                                          children: [
+                                                            const Text(
+                                                                'Do you want to delete?'),
+                                                            Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
+                                                              children: [
+                                                                TextButton(
+                                                                  onPressed:
+                                                                      () {
+                                                                    Get.back();
+                                                                  },
+                                                                  child:
+                                                                      const Text(
+                                                                          'No'),
+                                                                ),
+                                                                const SizedBox(
+                                                                    width: 60),
+                                                                TextButton(
+                                                                  onPressed:
+                                                                      () {
+                                                                    //Delete
+                                                                    todoControllers
+                                                                        .deleteTodos(
+                                                                            e.id);
+                                                                    Get.back();
+                                                                  },
+                                                                  child:
+                                                                      const Text(
+                                                                          'Yes'),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      );
+                                                    },
+                                                    icon: const Icon(
+                                                      Icons.delete,
+                                                      color: Colors.white,
+                                                      size: 20,
+                                                    ),
+                                                  ),
+                                                ],
+                                              )
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                                  .toList(),
+                            ),
                     );
                   },
                   itemCount: 1,
